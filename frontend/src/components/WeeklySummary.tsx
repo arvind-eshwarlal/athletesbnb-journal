@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-interface Entry {
-  id: string;
-  session_type: string;
-  voice_transcript: string;
-  intensity: number;
-  created_at: string;
-  insights?: Array<{ insight_text: string }>;
-}
+
 
 interface SummaryData {
   sessionCount: number;
