@@ -29,7 +29,7 @@ export const Dashboard: React.FC = () => {
     if (user?.id) {
       fetchEntries();
     }
-  }, [user?.id, fetchEntries]);
+  }, [user?.id]);
 
   const fetchEntries = async () => {
     try {
