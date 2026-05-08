@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import './design-tokens.css';
+import React, { useState } from 'react';
+import { useAuthStore } from './store/authStore';
+import { Onboarding } from './pages/Onboarding';
+import { Dashboard } from './pages/Dashboard';
 import './App.css';
 
 function App() {
+  const user = useAuthStore((state: any) => state.user);
+  const [showDashboard, setShowDashboard] = useState(false);
+
+  const handleOnboardingComplete = () => {
+    setShowDashboard(true);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!showDashboard || !user ? (
+        <Onboarding onComplete={handleOnboardingComplete} />
+      ) : (
+        <Dashboard />
+      )}
     </div>
   );
 }
