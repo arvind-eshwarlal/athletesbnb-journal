@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client
-const SUPABASE_URL = 'https://ajhjoquhvaobmgrqldeg.supabase.co';
+const SUPABASE_URL = 'https://ajhjoquhvaobmgrgldeg.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqaGpvcXVodmFvYm1ncnFsZGVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk2NzQ5MDcsImV4cCI6MjAyNTI1MDkwN30.x_0Rc5jFY1tKqLgfPwJwJ9zV-WkM8_lVZ2P7jVm1QQQ';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
