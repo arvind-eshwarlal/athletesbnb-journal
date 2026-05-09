@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuthStore } from '../store/authStore';
-
+export function Onboarding() {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    const errorCode = params.get('error_code');
+    const errorMsg = params.get('error_description');
+    
+    if (error) {
+      console.log('OAuth Error:', { error, errorCode, errorMsg });
+    }
+  }, []);
 const sports = [
   'Tennis',
   'Swimming',
