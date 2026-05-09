@@ -12,7 +12,11 @@ const PORT = process.env.PORT || 5001;
  
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://athletesbnb-journal.vercel.app', 'https://*.vercel.app'],
+  origin: [
+    'http://localhost:3000',
+    'https://athletesbnb-journal.vercel.app',
+    'https://athletesbnb-journal-3twsyq4dr-arvind-eshwarlals-projects.vercel.app'
+  ],
   credentials: true
 }));
 app.use(express.json());
