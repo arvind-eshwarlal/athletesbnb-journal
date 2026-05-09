@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuthStore } from '../store/authStore';
-export function Onboarding() {
+export function Onboarding() 
+  // ADD THIS RIGHT HERE (start of component):
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const error = params.get('error');
