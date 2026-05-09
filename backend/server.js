@@ -275,7 +275,7 @@ app.get('/journal/entries/:user_id', async (req, res) => {
  
     const { data, error } = await supabase
       .from('journal_entries')
-      .select('*')
+      .select('*, insights(*)')
       .eq('user_id', user_id)
       .order('created_at', { ascending: false });
  
