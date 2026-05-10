@@ -2,18 +2,19 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 
 interface AuthContextType {
-  user: any;
-  signUp: (email: string, password: string) => Promise<any>;
-  signIn: (email: string, password: string) => Promise<any>;
-  signOut: () => Promise<void>;
-}
+    user: any;
+    loading: boolean;
+    signUp: (email: string, password: string) => Promise<any>;
+    signIn: (email: string, password: string) => Promise<any>;
+    signOut: () => Promise<void>;
+  }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => { setLoading(true);
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user || null);
@@ -53,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
