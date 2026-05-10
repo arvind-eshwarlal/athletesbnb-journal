@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuthStore } from '../store/authStore';
@@ -21,17 +21,6 @@ const sports = [
 const levels = ['Beginner', 'Competitive', 'Elite'];
 
 export const Onboarding: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
-  // Debug logging for OAuth errors
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const error = params.get('error');
-    const errorCode = params.get('error_code');
-    const errorMsg = params.get('error_description');
-    
-    if (error) {
-      console.log('OAuth Error:', { error, errorCode, errorMsg });
-    }
-  }, []);
 
   const [sport, setSport] = useState('');
   const [level, setLevel] = useState('');
