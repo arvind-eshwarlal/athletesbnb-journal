@@ -1,7 +1,7 @@
+import { Logo } from '../components/Logo';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './Login.css';
 
 export function Login() {
   const navigate = useNavigate();
@@ -32,26 +32,53 @@ export function Login() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.title}>My Journal</h1>
-        <p style={styles.subtitle}>Track. Understand. Grow.</p>
+    <div style={{ minHeight: '100vh', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '50px 20px', fontFamily: 'Ubuntu, sans-serif' }}>
+      <Logo />
 
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Email</label>
+      <div style={{ maxWidth: '500px', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%' }}>
+        {/* Headline */}
+        <h1 style={{ fontFamily: 'Quicksand, sans-serif', fontSize: '38px', fontWeight: 'bold', lineHeight: '1.2', marginBottom: '12px', color: '#000' }}>
+          {isSignUp ? 'Start Your Journey' : 'Welcome Back'}
+        </h1>
+
+        {/* Subtitle */}
+        <p style={{ fontSize: '15px', lineHeight: '1.6', color: '#666', marginBottom: '36px' }}>
+          {isSignUp
+            ? 'Create an account to start tracking your progress.'
+            : 'Sign in to continue your training journey.'}
+        </p>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} style={{ marginBottom: '32px' }}>
+          {/* Email Field */}
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', marginBottom: '6px', color: '#000' }}>
+              Email
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              style={styles.input}
+              style={{
+                width: '100%',
+                padding: '12px',
+                fontSize: '14px',
+                border: '1px solid #ddd',
+                borderRadius: '2px',
+                fontFamily: 'Ubuntu, sans-serif',
+                boxSizing: 'border-box',
+                backgroundColor: '#fff',
+              }}
             />
           </div>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Password</label>
+          {/* Password Field */}
+          <div style={{ marginBottom: '28px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', marginBottom: '6px', color: '#000' }}>
+              Password
+            </label>
             <input
               type="password"
               value={password}
@@ -59,125 +86,76 @@ export function Login() {
               placeholder="At least 6 characters"
               required
               minLength={6}
-              style={styles.input}
+              style={{
+                width: '100%',
+                padding: '12px',
+                fontSize: '14px',
+                border: '1px solid #ddd',
+                borderRadius: '2px',
+                fontFamily: 'Ubuntu, sans-serif',
+                boxSizing: 'border-box',
+                backgroundColor: '#fff',
+              }}
             />
           </div>
 
-          {error && <div style={styles.error}>{error}</div>}
+          {/* Error Message */}
+          {error && (
+            <div style={{ backgroundColor: '#ffebee', color: '#d32f2f', padding: '12px', borderRadius: '2px', fontSize: '13px', marginBottom: '20px' }}>
+              {error}
+            </div>
+          )}
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
             style={{
-              ...styles.button,
-              opacity: loading ? 0.6 : 1,
+              width: '100%',
+              padding: '12px',
+              backgroundColor: loading ? '#999' : '#000',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '2px',
+              fontSize: '14px',
+              fontWeight: '600',
               cursor: loading ? 'not-allowed' : 'pointer',
+              fontFamily: 'Ubuntu, sans-serif',
+              transition: 'background-color 0.2s',
             }}
           >
             {loading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Sign In'}
           </button>
         </form>
 
-        <div style={styles.toggle}>
-          <span>{isSignUp ? 'Already have an account?' : "Don't have an account?"}</span>
+        {/* Toggle Link */}
+        <div style={{ textAlign: 'center', fontSize: '14px', color: '#666' }}>
+          {isSignUp ? "Already have an account? " : "Don't have an account? "}
           <button
             onClick={() => {
               setIsSignUp(!isSignUp);
               setError('');
             }}
-            style={styles.toggleButton}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#000',
+              fontWeight: '600',
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              fontFamily: 'Ubuntu, sans-serif',
+              fontSize: '14px',
+            }}
           >
             {isSignUp ? 'Sign In' : 'Sign Up'}
           </button>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer style={{ textAlign: 'center', fontSize: '14px', fontWeight: '600', color: '#999', marginTop: '40px' }}>
+        My Journal - Track. Learn. Grow.
+      </footer>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    backgroundColor: '#f5f5f5',
-    fontFamily: 'Arial, sans-serif',
-    padding: '12px',
-  } as const,
-  card: {
-    backgroundColor: 'white',
-    padding: '28px 20px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    maxWidth: '420px',
-    width: '100%',
-  } as const,
-  title: {
-    fontSize: '22px',
-    fontWeight: 'bold',
-    color: '#1a202c',
-    margin: '0 0 2px 0',
-  } as const,
-  subtitle: {
-    fontSize: '12px',
-    color: '#666',
-    margin: '2px 0 18px 0',
-  } as const,
-  form: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '12px',
-  } as const,
-  formGroup: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '4px',
-  } as const,
-  label: {
-    fontSize: '12px',
-    fontWeight: '600',
-    color: '#333',
-  } as const,
-  input: {
-    padding: '8px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '13px',
-    fontFamily: 'Arial, sans-serif',
-    boxSizing: 'border-box' as const,
-  } as const,
-  button: {
-    padding: '9px',
-    backgroundColor: '#1a202c',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    marginTop: '6px',
-  } as const,
-  error: {
-    color: '#d32f2f',
-    fontSize: '12px',
-    padding: '8px',
-    backgroundColor: '#ffebee',
-    borderRadius: '4px',
-  } as const,
-  toggle: {
-    marginTop: '12px',
-    fontSize: '12px',
-    textAlign: 'center' as const,
-    color: '#666',
-  } as const,
-  toggleButton: {
-    background: 'none',
-    border: 'none',
-    color: '#1a202c',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    textDecoration: 'underline',
-    marginLeft: '4px',
-  } as const,
-};

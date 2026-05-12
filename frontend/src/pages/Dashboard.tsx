@@ -1,6 +1,7 @@
+import { Logo } from '../components/Logo';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuthStore } from '../store/authStore';
+import { useAuth } from '../context/AuthContext';
 import { VoiceInput } from '../components/VoiceInput';
 import { EntryList } from '../components/EntryList';
 import { WeeklySummary } from '../components/WeeklySummary';
@@ -17,7 +18,7 @@ interface Entry {
 }
 
 export const Dashboard: React.FC = () => {
-  const { user } = useAuthStore();
+  const { user } = useAuth();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
   const [showNewEntrySheet, setShowNewEntrySheet] = useState(false);
@@ -77,6 +78,7 @@ export const Dashboard: React.FC = () => {
   if (loading) {
     return (
       <div style={styles.container}>
+        <Logo />
         <div style={styles.loadingContainer}>
           <p style={styles.loadingText}>Loading your journal...</p>
         </div>
@@ -86,9 +88,16 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div style={styles.container}>
-      {/* Logo - Top Right */}
-      <div style={styles.logoContainer}>
-        <div style={styles.logo}>.rlxed</div>
+      <Logo />  {/* defaults to fixed={true} */}  {/* ← Just use the component, don't duplicate */}
+
+      {/* Header */}
+      <div style={styles.header}>
+        <div>
+          <h1 style={styles.title}>My Journal</h1>
+          <p style={styles.subtitle}>
+            {user?.sport} • {user?.level}
+          </p>
+        </div>
       </div>
 
       {/* Header */}

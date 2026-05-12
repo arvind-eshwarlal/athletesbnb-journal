@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Landing } from './pages/Landing';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Onboarding } from './pages/Onboarding';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
+import { FAQ } from './pages/FAQ';
 import './App.css';
 
 // Protected route component
@@ -26,18 +28,16 @@ function AppContent() {
 
   return (
     <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<Landing />} />
+      <Route path="/faq" element={<FAQ />} />
       <Route 
         path="/login" 
         element={!user ? <Login /> : <Navigate to="/dashboard" replace />} 
       />
-      <Route 
-        path="/onboarding" 
-        element={
-          <ProtectedRoute>
-            <Onboarding onComplete={() => window.location.href = '/dashboard'} />
-          </ProtectedRoute>
-        } 
-      />
+      <Route path="/onboarding" element={<Onboarding />} />
+
+      {/* Protected Routes */}
       <Route 
         path="/dashboard" 
         element={
@@ -46,7 +46,9 @@ function AppContent() {
           </ProtectedRoute>
         } 
       />
-      <Route path="/" element={<Navigate to="/login" replace />} />
+
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

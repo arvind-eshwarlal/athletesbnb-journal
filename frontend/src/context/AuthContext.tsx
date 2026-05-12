@@ -14,16 +14,19 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  useEffect(() => { setLoading(true);
+
+  useEffect(() => {
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user || null);
+      setLoading(false);  // ← Added: Set loading to false
     });
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUser(session?.user || null);
+        setLoading(false);  // ← Added: Set loading to false
       }
     );
 
@@ -36,6 +39,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       password,
     });
     if (error) throw error;
+    
+    // ← ADDED: Manually set user from response
+    if (data.user) {
+      setUser(data.user);
+    }
+    
     return data;
   };
 
@@ -45,6 +54,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       password,
     });
     if (error) throw error;
+    
+    // ← ADDED: Manually set user from response
+    if (data.user) {
+      setUser(data.user);
+    }
+    
     return data;
   };
 
